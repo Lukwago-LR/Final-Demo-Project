@@ -1,0 +1,6 @@
+numpy>1.21
+opencv-python==4.8.0.74
+pip==23.0.1
+tensorflow-hub==0.14.0
+tensorflow>2.10
+jinja2>=2.11.0
