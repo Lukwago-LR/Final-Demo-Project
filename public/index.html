@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8">
+    <title>Ultrasound&AugmentedReality</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/alpinejs" defer></script>
+    <!-- AR.js by @jerome_etienne - github: https://github.com/jeromeetienne/ar.js - info: https://medium.com/arjs/augmented-reality-in-10-lines-of-html-4e193ea9fdbf -->
+    <script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.0/aframe/build/aframe-ar.js"></script>
+
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body x-clock x-data="mainFunction">
+
+    <header>
+        <span class="logout" x-show="login&&homePage">
+            <button @click="LoggingOut">
+                <h5>Sign out</h5>
+            </button>
+        </span>
+        <h1>Ultrasound Imaging Medical Professionals</h1>
+        <p>Your Health is Our Priority</p>
+    </header>
+
+    <!-- section for login -->
+    <section x-show="logout">
+        <!-- Welcome Message -->
+        <section class="welcome">
+            <h2>Welcome to Our Ultrasound Scanning Services</h2>
+            <p>Providing state-of-the-art ultrasound imaging for accurate diagnostics in lung cancer</p>
+        </section>
+
+        <div class="row login-container">
+            <h1>Login</h1>
+            <form x-on:submit.prevent="this.username, this.password">
+                <input type="password" name="password" placeholder="Password" x-model="username" required>
+                <input type="password" name="password" placeholder="Password" x-model="password" required>
+                <button type="submit" @click="authentication">Log In</button>
+                <text class="text-danger" text-align="center" x-text="feed"></text>
+            </form>
+        </div>
+    </section>
+
+    <!-- section for home page -->
+    <section x-show="login&&homePage">
+        <div class="row intro">
+            <div class="col-lg-6">
+                <section class="welcome-section">
+                    <span>
+                        <h2>Welcome to Our Medical Imaging Center</h2>
+                        <p>Providing High-Quality Ultrasound Services for Accurate Diagnostics</p>
+                    </span>
+                </section>
+            </div>
+
+            <div class="col-lg-6">
+                <img class="rounded-image" src="images\augmented.jpg" width="170px" height="170px">
+            </div>
+        </div>
+
+
+
+        <section class="main">
+
+            <h2>Our Services</h2>
+            <div class="row features">
+                <div class="col-lg-6 feature">
+                    <h3>Upload Scanned Image</h3>
+                    <p>Upload a lung cancer ultrasound image from your device.</p>
+                    <button id="cameraButton" type="submit" @click="openCamera">
+                        <p>Image Upload</p>
+                    </button>
+                </div>
+                <div class="col-lg-6 feature">
+                    <h3>Classification</h3>
+                    <p>Receive the class of lung cancer detected from scanned images.</p>
+                    <button type="submit" @click="openClassification">
+                        <p>Classification</p>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row features">
+                <div class="col-lg-6 feature">
+                    <h3>3D Imaging</h3>
+                    <p>Comprehensive 3D imaging for visual assistance.</p>
+                    <button type="submit" @click="open3D">
+                        <p>3D Imaging</p>
+                    </button>
+                </div>
+
+                <div class="col-lg-6 feature">
+                    <h3>Augmented Reality</h3>
+                    <p>Augmented Reality feature as a visual assistant tool.</p>
+                    <button id="augButton" type="submit" @click="openAugmentation">
+                        <p>Augmented Reality</p>
+                    </button>
+                </div>
+            </div>
+
+
+            <section class="contact-section">
+                <h2>Contact Us</h2>
+                <div class="contact-info">
+                    <p>Kingsway Street Johannesburg, Auckland</p>
+                    <p>Phone: (+27) 738976343</p>
+                    <p>Email: <a href="mailto:lukwagorsaved@gmail.com">lukwagorsaved@gmail.com</a></p>
+                </div>
+            </section>
+
+        </section>
+    </section>
+
+    <!-- section for user account -->
+    <section class="text-center" x-show="login&&account">
+        <button class="home" type="submit" @click="openHome('account')">Home</button>
+        <br>
+        <h2 class="text-danger">PROFILE</h2>
+        <label x-text="response"></label>
+    </section>
+
+    <!-- section for image classification -->
+    <section x-show="login&&classification">
+        <div class="classifying">
+            <button class="home" type="submit" @click="openHome('classification')">Home</button>
+            <br>
+            <h2 class="title">CLASSIFICATION</h2>
+            <br>
+            <button @click="predict">Get Prediction</button>
+            <br>
+            <text class="text-success" x-text="prediction"></text>
+
+            <div x-show="load" class="loading">
+
+            </div>
+        </div>
+
+        <div class="classifying" x-show="Malig">
+            <div class="row">
+                <div class="col-md-4">
+                    <img
+                        src="images/514240-article-img-malignant-vs-benign-tumor2111891f-54cc-47aa-8967-4cd5411fdb2f-5a2848f122fa3a0037c544be.jpg">
+                </div>
+                <div class="col-md-8 badge bg-warning">
+                    <p>Malignant tumors are made of cancer cells that can grow uncontrollably and invade nearby tissues.
+                    </p>
+                    <p>The cancer cells in a malignant tumor tend to be abnormal and very different from the normal
+                        surrounding tissue.</p>
+                    <br>
+
+                    <h4>Cancerous tumors can occur anywhere in the body. The most frequently diagnosed malignant tumors
+                        worldwide include:</h4>
+                    <ul>
+                        <li>Breast cancer </li>
+                        <li>Lung cancer</li>
+                        <li>Colorectal cancer</li>
+                        <li>Prostate cancer</li>
+                        <li>Stomach cancer</li>
+                    </ul>
+                    <br>
+
+                    <h4>Differences Between Malignant vs. Benign Tumors</h4>
+
+                    <div style="text-align: center;">
+                        <table>
+                            <tr>
+                                <th>MALIGNANT TUMORS</th>
+                                <th>BEGNIN TUMORS</th>
+                            </tr>
+                            <tr>
+                                <td>Cancerous</td>
+                                <td>Not cancerous</td>
+
+                            </tr>
+                            <tr>
+                                <td>May invade surrounding tissue</td>
+                                <td>Doesn’t invade surrounding tissue</td>
+                            </tr>
+                            <tr>
+                                <td>Irregular shape</td>
+                                <td>Smooth shape</td>
+                            </tr>
+                            <tr>
+                                <td>Most grow rapidly*</td>
+                                <td>Most grow slowly*</td>
+                            </tr>
+
+                            <tr>
+                                <td>Needs treatment</td>
+                                <td>May not need treatment</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <br><br>
+                    <h3><a class="text-danger"
+                            href="https://www.verywellhealth.com/what-does-malignant-and-benign-mean-514240">Get more
+                            Information</a></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="classifying" x-show='Beg'>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="images\begnin.jpg" height="390px">
+                </div>
+                <div class="col-md-8 badge bg-danger">
+                    <p>A benign tumor is made up of cells that don't threaten to invade other tissues.</p>
+                    <p>The tumor cells are contained within the tumor and aren't abnormal or very different from
+                        surrounding cells.</p>
+                    <br>
+                    <br>
+
+                    <h4>Usually, benign types of tumors are harmless unless they are:</h4>
+                    <ul>
+                        <li> Pressing on nearby tissues, nerves, or blood vessels </li>
+                        <li>Pressing on nearby tissues, nerves, or blood vessels</li>
+                        <li>Taking up space in the brain</li>
+                        <li>Causing damage</li>
+                        <li>Causing excess hormone production</li>
+                    </ul>
+
+                    <br>
+                    <br>
+
+                    <h4>Common benign tumors include:</h4>
+                    <ul>
+                        <li>Fibroids</li>
+                        <li>Lipomas</li>
+                        <li>Adenomas</li>
+                        <li>Hemangiomas</li>
+                    </ul>
+
+                    <br><br>
+                    <h3><a class="text-danger"
+                            href="https://www.verywellhealth.com/what-does-malignant-and-benign-mean-514240">Get more
+                            Information</a></h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="classifying" x-show="Norm">
+            <div class="row">
+                <div class="col-md-6 text-success">
+                    <h3><b>THESE ARE HEALTH LUNGS</b></h3>
+                    <img src="images/health.jpg" width="40%" height="390px">
+                </div>
+                <div class="col-md-6 text-danger">
+                    <h3><b>AVOID SMOKING</b></h3>
+                    <img src="images\smoking.png" width="40%" height="390px">
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- section for 3D Imaging-->
+    <section class="imaging" x-show="login&&image3D">
+        <div>
+            <button class="home" type="submit" @click="openHome('image3D')">Home</button>
+            <br>
+            <h2 class="title">3D IMAGING</h2>
+        </div>
+        <div id="aSide">
+            <model-viewer src="model_3D/scene.gltf" alt="Lung Cancer model" auto-rotate camera-controls ar
+                ios-src="model_3D/scene.gltf">
+            </model-viewer>
+        </div>
+    </section>
+
+    <!-- section for Augmented Reality -->
+    <section class="augmenting" x-show="login&&augmentation">
+        <button id="augHome" class="home" type="submit" @click="openHome('augmentation')">Home</button>
+        <br>
+        <h2 class="title">AUGMENTED REALITY CONCEPTS</h2>
+        <br>
+        <button id="augHome" type="submit" @click="navigateToNewPage()">Augment</button>
+    </section>
+
+    <!-- section for Camera -->
+    <section class="camering" x-show="login&&camera">
+        <div>
+            <button class="home" type="submit" @click="openHome('camera')">Home</button>
+            <br>
+            <h2 class="title">IMAGE UPLOAD</h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 upload text-justify">
+                <h4 class="text-danger">Upload An Ultrasound Image</h4>
+                <form action="/upload" method="post" enctype="multipart/form-data">
+                    <input type="file" name="image" />
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Ultrasound Medical Professionals. All rights reserved.</p>
+    </footer>
+
+</body>
+
+<script src="code.js"></script>
+
+</html>

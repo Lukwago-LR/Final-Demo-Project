@@ -1,0 +1,297 @@
+/* Home page CSS */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    /* Light gray background */
+    color: #333;
+    /* Dark gray text color */
+}
+
+/* Welcome Message */
+.welcome {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: lightgray;
+    /* light brown content background */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Light shadow */
+}
+
+/* Login Page CSS */
+.login-container {
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.login-container button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background-color: #2980b9;
+}
+
+.intro {
+    text-align: center;
+}
+
+.rounded-image {
+    border-radius: 40%;
+}
+
+header {
+    background-color: #1a75ff;
+    /* Blue header background */
+    color: #fff;
+    /* White text color */
+    padding: 10px;
+    text-align: center;
+}
+
+.logout {
+    float: right;
+}
+
+.logout button {
+    border: solid 3px rgb(205, 228, 205);
+    background-color: #fcfdfd;
+    color: #f11919;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: lightblue;
+}
+
+.main {
+    background: lightgray;
+    border-radius: 30px;
+    margin: 20px;
+    text-align: center;
+}
+
+.main button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.main button:hover {
+    background-color: #2980b9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.feature {
+    border: rgb(238, 230, 241) solid 1px;
+    border-radius: 10%;
+}
+
+.features {
+    padding: 1px;
+    margin: 1px;
+}
+
+.services-section,
+.contact-section {
+    margin-top: 40px;
+}
+
+.services-section,
+.contact-section {
+    margin-top: 40px;
+}
+
+.main h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.main p {
+    font-size: 18px;
+    line-height: 1;
+    margin-bottom: 20px;
+}
+
+.services-list {
+    list-style: none;
+    padding: 5px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.services-list li {
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.contact-info {
+    text-align: center;
+}
+
+
+.title {
+    font-weight: bold;
+}
+
+.location {
+    color: #665E77;
+}
+
+.consult {
+    color: #7358D4;
+}
+
+.classifying,
+.imaging,
+.augmenting,
+.camering {
+    text-align: center;
+    margin-top: 20px;
+
+    .title {
+        color: rgb(170, 22, 22);
+    }
+
+}
+
+.home {
+    float: right;
+    margin-right: 50px;
+}
+
+#aSide {
+    border-radius: 20px;
+    height: 850px;
+    width: 100%;
+    text-align: center;
+}
+
+/* This styles the 3D object inserted in the aside container */
+#aSide model-viewer {
+    height: 850px;
+    width: 100%;
+}
+
+.augment {
+    height: 40px;
+    width: 20px;
+    text-align: center;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+}
+
+.loading::after {
+    content: "";
+    width: 50px;
+    height: 50px;
+    border: 10px solid #dddddd;
+    border-top-color: #009579;
+    border-radius: 50%;
+    animation: loading 1s linear infinite;
+}
+
+@keyframes loading {
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+.augment model-viewer {
+    height: 10em;
+    width: 18em;
+}
+
+/* styling for the camera section */
+#title {
+    border-color: #b81019;
+    font-size: large;
+}
+
+#downloadLink {
+    color: #b81019;
+    padding-top: 8px;
+}
+
+.upload {
+    width: 58%;
+    float: right;
+}
+
+/* CSS for classification*/
+.classifying {
+    justify-content: center;
+}
+
+/* Tables */
+
+table,
+th,
+td {
+    border: 1px solid black;
+    padding: 15px;
+    border-spacing: 30px;
+    margin-left: 20rem;
+}
+
+/* footer CSS */
+footer {
+    background-color: #1a75ff;
+    /* Blue footer background */
+    color: #fff;
+    /* White text color */
+    padding: 10px;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+}
