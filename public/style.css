@@ -96,14 +96,15 @@ button:hover {
 .main {
     background: lightgray;
     border-radius: 30px;
-    margin: 20px;
+    margin: 15px;
     text-align: center;
 }
 
 .main button {
     background-color: #3498db;
     color: #fff;
-    padding: 10px 15px;
+    padding: 5px;
+    margin-bottom: 5px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -125,12 +126,13 @@ button:hover {
 }
 
 .feature {
-    border: rgb(238, 230, 241) solid 1px;
-    border-radius: 10%;
+    background-color: lightslategray;
+    border: 1px solid;
+    border-color: lightgrey;
 }
 
 .features {
-    padding: 1px;
+    padding: 2px;
     margin: 1px;
 }
 
